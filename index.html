@@ -14,7 +14,7 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f7;color:#1c1c1e;min-height:100vh}
 .topbar{background:#fff;border-bottom:0.5px solid #e0e0e0;padding:12px 16px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .topbar-title{font-size:17px;font-weight:600;flex-shrink:0}
-.month-nav{display:flex;align-items:center;gap:8px}
+.month-nav{display:flex;align-items:center;gap:6px}
 .month-nav button{background:none;border:none;font-size:20px;cursor:pointer;color:#636366;padding:2px 6px;border-radius:6px}
 .month-nav button:active{background:#e5e5ea}
 .month-label{font-size:14px;font-weight:500;min-width:100px;text-align:center}
@@ -38,8 +38,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .new-cat-row input{margin-bottom:0;font-size:15px}
 .icon-btn{background:none;border:1px solid #e0e0e0;border-radius:10px;padding:10px 14px;font-size:14px;cursor:pointer;color:#007aff;white-space:nowrap}
 .icon-btn:active{background:#f0f0f5}
-.add-btn{width:100%;background:#007aff;color:#fff;border:none;border-radius:10px;padding:12px;font-size:16px;font-weight:600;cursor:pointer}
+.btn-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.add-btn{background:#007aff;color:#fff;border:none;border-radius:10px;padding:12px;font-size:16px;font-weight:600;cursor:pointer}
 .add-btn:active{background:#0062cc}
+.clear-btn{background:none;border:1px solid #e0e0e0;border-radius:10px;padding:12px 16px;font-size:14px;cursor:pointer;color:#8e8e93}
+.clear-btn:active{background:#f5f5f7}
 .section-label{font-size:12px;font-weight:600;color:#8e8e93;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px}
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
 .cat-card{background:#fff;border-radius:12px;padding:10px 12px}
@@ -50,29 +53,47 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .exp-list{background:#fff;border-radius:14px;overflow:hidden}
 .exp-item{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:0.5px solid #f2f2f7}
 .exp-item:last-child{border-bottom:none}
-.exp-desc{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
-.exp-meta{font-size:12px;color:#8e8e93;margin-top:2px;display:flex;align-items:center;gap:5px}
+.exp-desc{font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.exp-meta{font-size:11px;color:#8e8e93;margin-top:2px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .exp-pill{font-size:11px;font-weight:600;padding:1px 7px;border-radius:20px}
-.exp-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.exp-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .exp-amt{font-size:15px;font-weight:600}
-.del{background:none;border:none;font-size:16px;color:#c7c7cc;cursor:pointer;padding:2px 4px;line-height:1}
-.del:active{color:#ff3b30}
+.act-btn{background:none;border:none;font-size:15px;color:#c7c7cc;cursor:pointer;padding:3px 5px;line-height:1;border-radius:6px}
+.act-btn:active{background:#f5f5f7}
+.act-btn.edit{color:#007aff}
+.act-btn.del:active{color:#ff3b30}
+.edit-modal-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;align-items:flex-end;justify-content:center}
+.edit-modal-wrap.open{display:flex}
+.edit-modal{background:#fff;border-radius:20px 20px 0 0;padding:20px 16px 36px;width:100%;max-width:480px}
+.edit-modal h3{font-size:16px;font-weight:600;margin-bottom:14px}
+.edit-modal input,.edit-modal select{width:100%;font-size:16px;padding:10px 12px;border:1px solid #e0e0e0;border-radius:10px;background:#fff;color:#1c1c1e;margin-bottom:8px;outline:none;-webkit-appearance:none}
+.edit-modal input:focus,.edit-modal select:focus{border-color:#007aff}
+.edit-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.edit-row2 input,.edit-row2 select{margin-bottom:0}
+.edit-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.save-btn{background:#007aff;color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:600;cursor:pointer}
+.cancel-btn{background:none;border:1px solid #e0e0e0;border-radius:10px;padding:12px;font-size:15px;cursor:pointer;color:#636366}
 .empty{text-align:center;padding:32px 0;color:#c7c7cc;font-size:15px}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1c1e;color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1c1c1e;color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99;white-space:nowrap}
 .toast.show{opacity:1}
 @media(prefers-color-scheme:dark){
   body{background:#1c1c1e;color:#f5f5f7}
   .topbar,.metric,.add-card,.exp-list,.cat-card{background:#2c2c2e}
   .topbar{border-bottom-color:#3a3a3c}
   .add-card input,.add-card select{background:#3a3a3c;border-color:#3a3a3c;color:#f5f5f7}
-  .icon-btn{border-color:#3a3a3c;color:#0a84ff}
+  .icon-btn,.clear-btn{border-color:#3a3a3c}
+  .clear-btn{color:#636366}
   .add-btn{background:#0a84ff}
   .exp-item{border-bottom-color:#3a3a3c}
   .bar-wrap{background:#3a3a3c}
-  .del{color:#636366}
-  .metric-label,.exp-meta{color:#8e8e93}
+  .act-btn{color:#48484a}
+  .act-btn.edit{color:#0a84ff}
   .sync-btn{border-color:#3a3a3c}
   .toast{background:#f5f5f7;color:#1c1c1e}
+  .edit-modal{background:#2c2c2e}
+  .edit-modal input,.edit-modal select{background:#3a3a3c;border-color:#3a3a3c;color:#f5f5f7}
+  .cancel-btn{border-color:#3a3a3c;color:#8e8e93}
+  .metric-label,.exp-meta{color:#8e8e93}
 }
 </style>
 </head>
@@ -86,6 +107,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <button class="sync-btn" id="sync-btn">Drive</button>
 </div>
+
 <div class="content">
   <div class="summary-grid">
     <div class="metric"><div class="metric-label">Bu ay toplam</div><div class="metric-val" id="total-amt">0</div></div>
@@ -110,12 +132,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <input type="text" id="inp-newcat" placeholder="Kategori adı..." />
       <button class="icon-btn" id="cat-save-btn">Ekle</button>
     </div>
-    <button class="add-btn" id="add-btn">Ekle</button>
+    <div class="btn-row">
+      <button class="add-btn" id="add-btn">Ekle</button>
+      <button class="clear-btn" id="clear-btn">Temizle</button>
+    </div>
   </div>
   <div id="cat-section"></div>
   <div class="section-label">Harcamalar</div>
   <div id="exp-list"></div>
 </div>
+
+<div class="edit-modal-wrap" id="edit-modal-wrap">
+  <div class="edit-modal">
+    <h3>Kaydı düzenle</h3>
+    <input type="text" id="edit-desc" placeholder="Açıklama" />
+    <div class="edit-row2">
+      <input type="number" id="edit-amt" placeholder="Tutar" min="0" step="0.01" />
+      <select id="edit-cur">
+        <option value="TL">TL ₺</option>
+        <option value="EUR">EUR €</option>
+        <option value="USD">USD $</option>
+        <option value="GBP">GBP £</option>
+      </select>
+    </div>
+    <select id="edit-cat"></select>
+    <div class="edit-btns">
+      <button class="save-btn" id="edit-save">Kaydet</button>
+      <button class="cancel-btn" id="edit-cancel">İptal</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://accounts.google.com/gsi/client" async></script>
@@ -132,7 +179,7 @@ const PALETTE=[
   {c:'#00C7BE',bg:'#E0FAF9',t:'#005450'},{c:'#32ADE6',bg:'#E5F4FC',t:'#0A4A6E'},
 ];
 const DEFAULT_CATS=['Yemek','Ulaşım','Market','Sağlık','Eğlence','Fatura','Giyim','Diğer'];
-let cats,data,nid,accessToken=null,driveFileId=null;
+let cats,data,nid,accessToken=null,driveFileId=null,editingId=null;
 try{cats=JSON.parse(localStorage.getItem('exp_cats'))||[...DEFAULT_CATS]}catch(e){cats=[...DEFAULT_CATS]}
 try{data=JSON.parse(localStorage.getItem('exp_v2'))||[]}catch(e){data=[]}
 nid=data.reduce((m,x)=>Math.max(m,x.id||0),0)+1;
@@ -144,12 +191,25 @@ function saveLocal(){localStorage.setItem('exp_v2',JSON.stringify(data));localSt
 function fmt(a,c){return parseFloat(a).toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+(CUR_SYM[c]||c)}
 function mk(y,m){return y+'-'+String(m).padStart(2,'0')}
 
+function playDing(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.setValueAtTime(880,ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(660,ctx.currentTime+0.15);
+    g.gain.setValueAtTime(0.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+    o.start();o.stop(ctx.currentTime+0.3);
+  }catch(e){}
+}
+
 function showToast(msg,dur=2500){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),dur);
 }
-
 function setSyncBtn(state,label){
   const b=document.getElementById('sync-btn');
   b.className='sync-btn'+(state?' '+state:'');
@@ -164,46 +224,28 @@ async function driveRequest(method,url,body,params){
   if(!r.ok)throw new Error(r.status);
   return r.json();
 }
-
 async function findOrCreateFile(){
-  const res=await driveRequest('GET','https://www.googleapis.com/drive/v3/files',null,{
-    spaces:'appDataFolder',q:"name='harcama_data.json'",fields:'files(id)'
-  });
+  const res=await driveRequest('GET','https://www.googleapis.com/drive/v3/files',null,{spaces:'appDataFolder',q:"name='harcama_data.json'",fields:'files(id)'});
   if(res.files&&res.files.length){driveFileId=res.files[0].id;return;}
-  const meta=await fetch('https://www.googleapis.com/drive/v3/files',{
-    method:'POST',
-    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
-    body:JSON.stringify({name:'harcama_data.json',parents:['appDataFolder']})
-  });
-  const mj=await meta.json();
-  driveFileId=mj.id;
+  const meta=await fetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},body:JSON.stringify({name:'harcama_data.json',parents:['appDataFolder']})});
+  const mj=await meta.json();driveFileId=mj.id;
 }
-
 async function uploadToDrive(){
   if(!accessToken)return;
   try{
     if(!driveFileId)await findOrCreateFile();
-    const payload=JSON.stringify({data,cats});
-    await fetch('https://www.googleapis.com/upload/drive/v3/files/'+driveFileId+'?uploadType=media',{
-      method:'PATCH',
-      headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
-      body:payload
-    });
+    await fetch('https://www.googleapis.com/upload/drive/v3/files/'+driveFileId+'?uploadType=media',{method:'PATCH',headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},body:JSON.stringify({data,cats})});
     setSyncBtn('synced','✓ Drive');
-    showToast('Drive\'a yedeklendi');
-  }catch(e){setSyncBtn('error','Drive !');showToast('Yedekleme hatası');}
+  }catch(e){setSyncBtn('error','Drive !');}
 }
-
 async function downloadFromDrive(){
   if(!accessToken)return;
   try{
     if(!driveFileId)await findOrCreateFile();
-    const r=await fetch('https://www.googleapis.com/drive/v3/files/'+driveFileId+'?alt=media',{
-      headers:{Authorization:'Bearer '+accessToken}
-    });
+    const r=await fetch('https://www.googleapis.com/drive/v3/files/'+driveFileId+'?alt=media',{headers:{Authorization:'Bearer '+accessToken}});
     if(!r.ok)return;
     const txt=await r.text();
-    if(!txt||txt.trim()==='')return;
+    if(!txt||!txt.trim())return;
     const parsed=JSON.parse(txt);
     if(parsed.data){data=parsed.data;nid=data.reduce((m,x)=>Math.max(m,x.id||0),0)+1;}
     if(parsed.cats)cats=parsed.cats;
@@ -212,33 +254,67 @@ async function downloadFromDrive(){
     showToast('Drive\'dan yüklendi');
   }catch(e){setSyncBtn('error','Drive !');}
 }
-
 function signIn(){
-  const client=google.accounts.oauth2.initTokenClient({
-    client_id:CLIENT_ID,scope:SCOPES,
-    callback:async(resp)=>{
-      if(resp.error){setSyncBtn('error','Drive !');return;}
-      accessToken=resp.access_token;
-      setSyncBtn('','⟳ Drive...');
-      await downloadFromDrive();
-    }
-  });
+  const client=google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SCOPES,callback:async(resp)=>{
+    if(resp.error){setSyncBtn('error','Drive !');return;}
+    accessToken=resp.access_token;
+    setSyncBtn('','⟳ Drive...');
+    await downloadFromDrive();
+  }});
   client.requestAccessToken();
 }
-
 document.getElementById('sync-btn').addEventListener('click',()=>{
-  if(!accessToken){signIn();}
-  else{setSyncBtn('','⟳ Drive...');uploadToDrive();}
+  if(!accessToken)signIn();
+  else{setSyncBtn('','⟳...');uploadToDrive();}
 });
 
 function save(){saveLocal();if(accessToken)uploadToDrive();}
 
 function buildCatSelect(){
-  const s=document.getElementById('inp-cat');
-  const prev=s.value;
-  s.innerHTML=cats.map(c=>`<option value="${c}">${c}</option>`).join('');
-  if(cats.includes(prev))s.value=prev;
+  [document.getElementById('inp-cat'),document.getElementById('edit-cat')].forEach(s=>{
+    if(!s)return;
+    const prev=s.value;
+    s.innerHTML=cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+    if(cats.includes(prev))s.value=prev;
+  });
 }
+
+function fmtDatetime(ts){
+  if(!ts)return'';
+  const d=new Date(ts);
+  return d.getDate()+'/'+(d.getMonth()+1)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+
+function openEdit(id){
+  const x=data.find(t=>t.id===id);
+  if(!x)return;
+  editingId=id;
+  document.getElementById('edit-desc').value=x.desc||'';
+  document.getElementById('edit-amt').value=x.amt||'';
+  document.getElementById('edit-cur').value=x.cur||'TL';
+  buildCatSelect();
+  document.getElementById('edit-cat').value=x.cat||cats[0];
+  document.getElementById('edit-modal-wrap').classList.add('open');
+}
+function closeEdit(){
+  editingId=null;
+  document.getElementById('edit-modal-wrap').classList.remove('open');
+}
+document.getElementById('edit-save').addEventListener('click',()=>{
+  if(!editingId)return;
+  const x=data.find(t=>t.id===editingId);
+  if(!x)return;
+  const desc=document.getElementById('edit-desc').value.trim();
+  const amt=parseFloat(document.getElementById('edit-amt').value);
+  if(!desc||!amt||amt<=0)return;
+  x.desc=desc;x.amt=amt;
+  x.cur=document.getElementById('edit-cur').value;
+  x.cat=document.getElementById('edit-cat').value;
+  save();render();closeEdit();
+  showToast('Kayıt güncellendi');
+});
+document.getElementById('edit-cancel').addEventListener('click',closeEdit);
+document.getElementById('edit-modal-wrap').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEdit()});
 
 function render(){
   document.getElementById('month-label').textContent=MONTHS[curM]+' '+curY;
@@ -260,14 +336,34 @@ function render(){
         const p=pal(cat);
         const amtStr=Object.entries(byCat[cat]).map(([c,v])=>fmt(v,c)).join(' / ');
         const pct=Object.entries(byCat[cat]).reduce((b,[c,v])=>{const pp=maxByCur[c]?Math.round(v/maxByCur[c]*100):0;return pp>b?pp:b},0);
-        return `<div class="cat-card"><span class="cat-pill" style="background:${p.bg};color:${p.t}">${cat}</span><div class="cat-amt">${amtStr}</div><div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${p.c}"></div></div></div>`;
+        return`<div class="cat-card"><span class="cat-pill" style="background:${p.bg};color:${p.t}">${cat}</span><div class="cat-amt">${amtStr}</div><div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${p.c}"></div></div></div>`;
       }).join('')+'</div>';
   }
   const el=document.getElementById('exp-list');
   if(!items.length){el.innerHTML='<div class="empty">Bu ay harcama yok</div>';return;}
   el.className='exp-list';
-  el.innerHTML=items.map(x=>{const p=pal(x.cat);return`<div class="exp-item"><div><div class="exp-desc">${x.desc||'—'}</div><div class="exp-meta"><span class="exp-pill" style="background:${p.bg};color:${p.t}">${x.cat}</span>${x.date}</div></div><div class="exp-right"><span class="exp-amt">${fmt(x.amt,x.cur)}</span><button class="del" data-id="${x.id}">✕</button></div></div>`;}).join('');
-  el.querySelectorAll('.del').forEach(b=>b.addEventListener('click',()=>{data=data.filter(x=>x.id!==parseInt(b.dataset.id));save();render()}));
+  el.innerHTML=items.map(x=>{
+    const p=pal(x.cat);
+    const dt=fmtDatetime(x.ts);
+    return`<div class="exp-item">
+      <div style="min-width:0;flex:1">
+        <div class="exp-desc">${x.desc||'—'}</div>
+        <div class="exp-meta">
+          <span class="exp-pill" style="background:${p.bg};color:${p.t}">${x.cat}</span>
+          ${dt?'<span>'+dt+'</span>':''}
+        </div>
+      </div>
+      <div class="exp-right">
+        <span class="exp-amt">${fmt(x.amt,x.cur)}</span>
+        <button class="act-btn edit" data-edit="${x.id}">✎</button>
+        <button class="act-btn del" data-del="${x.id}">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{
+    data=data.filter(x=>x.id!==parseInt(b.dataset.del));save();render();showToast('Silindi');
+  }));
+  el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEdit(parseInt(b.dataset.edit))));
 }
 
 document.getElementById('add-btn').addEventListener('click',()=>{
@@ -277,12 +373,18 @@ document.getElementById('add-btn').addEventListener('click',()=>{
   const cat=document.getElementById('inp-cat').value;
   if(!desc||!amt||amt<=0)return;
   const d=new Date();
-  data.push({id:nid++,desc,amt,cur,cat,mk:mk(d.getFullYear(),d.getMonth()),date:d.getDate()+'/'+(d.getMonth()+1)});
+  data.push({id:nid++,desc,amt,cur,cat,mk:mk(d.getFullYear(),d.getMonth()),date:d.getDate()+'/'+(d.getMonth()+1),ts:d.getTime()});
   save();render();
   document.getElementById('inp-desc').value='';
   document.getElementById('inp-amt').value='';
+  playDing();
 });
 document.getElementById('inp-desc').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('add-btn').click()});
+document.getElementById('clear-btn').addEventListener('click',()=>{
+  document.getElementById('inp-desc').value='';
+  document.getElementById('inp-amt').value='';
+  document.getElementById('inp-desc').focus();
+});
 document.getElementById('cat-add-btn').addEventListener('click',()=>{
   const r=document.getElementById('new-cat-row');
   r.style.display=r.style.display==='grid'?'none':'grid';
